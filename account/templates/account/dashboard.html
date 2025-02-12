@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+ {% block title %}Dashboard{% endblock %}
+ {% block content %}
+  <h1>Dashboard</h1>
+  <p>Welcome to your dashboard.</p>
+  Hello {{ request.user.first_name|default:request.user.username }}
+  <br>
+  <a href="{% url "password_change" %}">Chage-password</a>
+ {% endblock %}
