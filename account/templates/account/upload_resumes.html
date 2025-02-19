@@ -1,0 +1,102 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>Upload Resumes for {{ job.job_title }}</h1>
+{% if form.errors %}
+<div class="alert alert-danger">
+    <strong>Error:</strong>
+    <ul>
+        {% for field, errors in form.errors.items %}
+            {% for error in errors %}
+                <li>{{ error }}</li>
+            {% endfor %}
+        {% endfor %}
+    </ul>
+</div>
+{% endif %}
+<form method="post" enctype="multipart/form-data" id="upload-form">
+    {% csrf_token %}
+    
+    <div class="custom-file-upload">
+        <div class="drag-drop-area" id="drop-zone">
+            Drag and drop your CV here
+            <br>
+            or
+            <br>
+            
+        </div>
+        <!-- Hidden file input -->
+        {{ form.resume_files }}
+        <div id="file-list" class="mt-2"></div>
+        <!-- Custom visible elements -->
+        
+    </div>
+    
+    <button type="submit" class="btn btn-primary mt-3">Upload Resumes</button>
+</form>
+
+<style>
+.custom-file-upload {
+    border: 2px dashed #ccc;
+    padding: 20px;
+    text-align: center;
+    cursor: pointer;
+}
+
+.custom-file-input {
+    display: none;
+}
+
+#file-list {
+    font-size: 0.9em;
+    color: #666;
+}
+
+.browse-text {
+    color: #007bff;
+    text-decoration: underline;
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const fileInput = document.querySelector('input[type="file"]');
+    const dropZone = document.getElementById('drop-zone');
+    const fileList = document.getElementById('file-list');
+
+    // Handle file selection
+    fileInput.addEventListener('change', function() {
+        updateFileList(this.files);
+    });
+
+    // Handle drag and drop
+    dropZone.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        dropZone.style.borderColor = '#007bff';
+    });
+
+    dropZone.addEventListener('dragleave', () => {
+        dropZone.style.borderColor = '#ccc';
+    });
+
+    dropZone.addEventListener('drop', (e) => {
+        e.preventDefault();
+        dropZone.style.borderColor = '#ccc';
+        fileInput.files = e.dataTransfer.files;
+        updateFileList(fileInput.files);
+    });
+
+    // Click drop zone to trigger file input
+    fileInput.addEventListener('click', () => {
+        fileInput.value = ''
+        fileInput.click()
+    });
+
+    function updateFileList(files) {
+        fileList.innerHTML = `
+            <strong>${files.length} files selected:</strong><br>
+            ${Array.from(files).map(file => file.name).join('<br>')}
+        `;
+    }
+});
+</script>
+{% endblock %}

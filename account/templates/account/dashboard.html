@@ -1,9 +1,88 @@
 {% extends "base.html" %}
- {% block title %}Dashboard{% endblock %}
- {% block content %}
+{% block title %}Dashboard{% endblock %}
+{% block content %}
   <h1>Dashboard</h1>
   <p>Welcome to your dashboard.</p>
   Hello {{ request.user.first_name|default:request.user.username }}
   <br>
-  <a href="{% url "password_change" %}">Chage-password</a>
- {% endblock %}
+  <a href="{% url 'post_job' %}" class="btn btn-primary">Post New Job</a>
+  <br>
+  <h1>Recent Job Postings</h1>
+  <ul>
+    {% for job, resumes in recent_jobs %}
+      <li>
+        <!-- Job Title and Actions in One Line -->
+        <div class="job-header">
+          <h2 class="job-title">{{ job.job_title }}</h2>
+          <div class="job-actions">
+            <a href="{% url 'upload_resumes' job_id=job.id %}" class="btn btn-link">Upload CV</a>
+            <a href="{% url 'delete_job' job.id %}" onclick="return confirm('Are you sure you want to delete this job?');" class="btn btn-link">Delete Job</a>
+            <a href="#" class="btn btn-link">Reports</a>
+          </div>
+        </div>
+
+        <!-- Resumes with Download and Delete Buttons -->
+        <h4>Resumes</h4>
+        <ol>
+          {% for resume in resumes %}
+            <li class="resume-item">
+              <span>{{ resume.resume_file.name }}</span>
+              <div class="resume-actions">
+                <a href="{% url 'delete_resume' resume.id %}" onclick="return confirm('Are you sure you want to delete this resume?');" class="btn btn-link">Delete</a>
+              </div>
+            </li>
+          {% empty %}
+            <p>No resumes found</p>
+          {% endfor %}
+        </ol>
+      </li>
+    {% empty %}
+      <li>No recent jobs found.</li>
+    {% endfor %}
+  </ul>
+  <a href="{% url 'password_change' %}">Change Password</a>
+
+  <!-- Add CSS for Styling -->
+  <style>
+    .job-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+
+    .job-title {
+      margin: 0; /* Remove default margin for h2 */
+    }
+
+    .job-actions {
+      display: flex;
+      gap: 10px; /* Space between buttons */
+    }
+
+    .resume-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 5px;
+    }
+
+    .resume-actions {
+      display: flex;
+      gap: 10px; /* Space between buttons */
+    }
+
+    .btn-link {
+      text-decoration: none;
+      color: #007bff; /* Bootstrap primary color */
+      padding: 5px 10px;
+      border: 1px solid #007bff;
+      border-radius: 4px;
+    }
+
+    .btn-link:hover {
+      background-color: #007bff;
+      color: white;
+    }
+  </style>
+{% endblock %}

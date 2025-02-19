@@ -1,0 +1,5 @@
+<!-- templates/widgets/multiple_file_input.html -->
+<div class="custom-file">
+    <input type="file" name="{{ widget.name }}"{% include "django/forms/widgets/attrs.html" %}>
+    <button><label class="custom-file-label" for="{{ widget.attrs.id }}">Browse Files</label></button>
+</div>
