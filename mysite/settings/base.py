@@ -21,6 +21,7 @@ ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', '*').split(',')
 # Application definition
 
 INSTALLED_APPS = [
+    'drf_yasg',
     'account.apps.AccountConfig',
     'django.contrib.admin',
     'django.contrib.auth',
