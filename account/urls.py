@@ -3,14 +3,13 @@ from django.contrib.auth import views as auth_views
 from . import views
 from . import docs_views
 
+
 urlpatterns = [
     path('', include('django.contrib.auth.urls')),
     path('', views.dashboard, name='dashboard'),
     path('register/', views.register, name='register'),
     path('post-job/', views.post_job, name='post_job'),
     path('upload-resumes/<int:job_id>/', views.upload_resumes, name='upload_resumes'),
-    path('delete-job/<int:job_id>/', views.delete_job, name='delete_job'),
-    path('delete-resume/<int:resume_id>', views.delete_resume, name='delete_resume'),
     
     # Swagger-documented API endpoints
     path('login/', docs_views.LoginAPI.as_view(), name='api-login'),
@@ -22,4 +21,8 @@ urlpatterns = [
     path('reset/<uidb64>/<token>/', docs_views.PasswordResetConfirmAPI.as_view(), name='api-password-reset-confirm'),
     path('reset/done/', docs_views.PasswordResetCompleteAPI.as_view(), name='api-password-reset-complete'),
     path('register/', docs_views.SignupAPI.as_view(), name='api-register'),
+    
+    path('post-job/', docs_views.JobPostAPI.as_view(), name='api-post-job'),
+    path('upload-resumes/<int:job_id>/', docs_views.UploadResumesAPI.as_view(), name='api-upload-resumes'),
+    path('', docs_views.DashboardAPI.as_view(), name='dashboard-api'),
 ]

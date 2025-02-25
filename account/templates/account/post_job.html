@@ -1,10 +1,10 @@
-{% extends 'base.html' %}
+{% extends 'account_base.html' %}
 {% block content %}
 <h1>Post a Job</h1>
 <form method="post">
   {% csrf_token %}
   {{ form.as_p }}
   <button type="submit" class="btn btn-success">Post Job</button>
-  <a href="{% url 'dashboard' %}" class="btn btn-secondary">Cancel</a>
+  <a href = "javascript:history.back()" > Back </a>
 </form>
 {% endblock %}

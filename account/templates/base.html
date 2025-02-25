@@ -7,12 +7,16 @@
     </head>
     <body>
         <div id="header">
-            <span class="logo">ResumeScreener</span>
+            <span class="logo">TalentAI</span>
             <span class="user">
                 {% if request.user.is_authenticated %}
+                {{ request.user.first_name|default:request.user.username }}
+                <br>
+                <a href="{% url 'password_change' %}">Change Password</a>
                 <form action="{% url 'logout' %}" method="post">
                   {% csrf_token %}
                   <button type="submit">Logout</button>
+                  
               </form>
                 {% else %}
                   <a href="{% url "login" %}">Log-in</a>

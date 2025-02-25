@@ -15,7 +15,7 @@ def dashboard(request):
     recent_jobs = Job.objects.filter(employer=request.user).order_by('-posted_at')[:10]
     jobs = []
     for job in recent_jobs:
-        jobs.append((job,job.resumes.all()))
+        jobs.append((job,len(job.resumes.all())))
     print(jobs)
     return render(request,'account/dashboard.html',{'recent_jobs': jobs})
     
@@ -38,7 +38,7 @@ def register(request):
 
 @login_required
 def post_job(request):
-    if request.method == 'POST':
+    if request.method == 'POST':    
         form = JobPostForm(request.POST)
         if form.is_valid():
             job = form.save(commit=False)
@@ -106,24 +106,11 @@ def upload_resumes(request, job_id):
                 else:
                     # Handle non-archive files (e.g., .pdf, .docx)
                     Resume.objects.create(job=job, resume_file=uploaded_file)
-            return redirect('dashboard')
+
+            return redirect('candidates:job_posts', job_id=job.id)
     else:
         form = ResumeUploadForm()
     return render(request, 'account/upload_resumes.html', {'form': form, 'job': job})
 
-@login_required
-def delete_job(request, job_id):
-    job = get_object_or_404(Job, id=job_id)
-    if job.employer != request.user:
-        return redirect('dashboard')
-    job.delete()
-    return redirect('dashboard')
 
-@login_required
-def delete_resume(request, resume_id):
-    resume = get_object_or_404(Resume, id=resume_id)
-    # Ensure the user is the owner of the job (optional but recommended)
-    if resume.job.employer != request.user:
-        return redirect('dashboard')  # Redirect if the user is not the owner
-    resume.delete()
-    return redirect('dashboard')
+

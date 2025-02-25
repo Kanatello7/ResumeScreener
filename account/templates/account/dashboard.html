@@ -1,10 +1,8 @@
-{% extends "base.html" %}
+{% extends "account_base.html" %}
 {% block title %}Dashboard{% endblock %}
 {% block content %}
   <h1>Dashboard</h1>
-  <p>Welcome to your dashboard.</p>
-  Hello {{ request.user.first_name|default:request.user.username }}
-  <br>
+
   <a href="{% url 'post_job' %}" class="btn btn-primary">Post New Job</a>
   <br>
   <h1>Recent Job Postings</h1>
@@ -13,34 +11,18 @@
       <li>
         <!-- Job Title and Actions in One Line -->
         <div class="job-header">
-          <h2 class="job-title">{{ job.job_title }}</h2>
-          <div class="job-actions">
-            <a href="{% url 'upload_resumes' job_id=job.id %}" class="btn btn-link">Upload CV</a>
-            <a href="{% url 'delete_job' job.id %}" onclick="return confirm('Are you sure you want to delete this job?');" class="btn btn-link">Delete Job</a>
-            <a href="#" class="btn btn-link">Reports</a>
-          </div>
+          <h2 class="job-title"><a href="{% url 'candidates:job_posts' job_id=job.id %}">{{ job.job_title }}</a></h2>
         </div>
-
-        <!-- Resumes with Download and Delete Buttons -->
-        <h4>Resumes</h4>
-        <ol>
-          {% for resume in resumes %}
-            <li class="resume-item">
-              <span>{{ resume.resume_file.name }}</span>
-              <div class="resume-actions">
-                <a href="{% url 'delete_resume' resume.id %}" onclick="return confirm('Are you sure you want to delete this resume?');" class="btn btn-link">Delete</a>
-              </div>
-            </li>
-          {% empty %}
-            <p>No resumes found</p>
-          {% endfor %}
-        </ol>
+        <p>
+          {{ resumes }} candidate{{ resumes|pluralize }}
+          | Posted {{ job.posted_at|timesince  }} ago
+        </p>
       </li>
     {% empty %}
       <li>No recent jobs found.</li>
     {% endfor %}
   </ul>
-  <a href="{% url 'password_change' %}">Change Password</a>
+  
 
   <!-- Add CSS for Styling -->
   <style>

@@ -1,0 +1,17 @@
+{% extends "account_base.html" %}
+{% block title %}Job-posts{% endblock %}
+{% block content %}
+<h1>{{ job.job_title}}</h1>
+<a href="{% url 'upload_resumes' job_id=job.id %}?next=job-posts" class="btn btn-link">Upload CV</a>
+<h1>Candidates List</h1>
+{% for resume in resumes %}
+            <li class="resume-item">
+              <span>{{ resume.resume_file.name }}</span>
+              <div class="resume-actions">
+                <a href="{% url 'candidates:delete_resume' resume.id %}" onclick="return confirm('Are you sure you want to delete this resume?');" class="btn btn-link">Delete</a>
+              </div>
+            </li>
+          {% empty %}
+            <p>No resumes found</p>
+{% endfor %}
+{% endblock %}
