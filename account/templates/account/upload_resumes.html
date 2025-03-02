@@ -1,6 +1,16 @@
-{% extends 'account_base.html' %}
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Upload CV{% endblock %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/upload_cv.css' %}">
+
+{% endblock %}
+
 {% block content %}
-<h1>Upload Resumes for {{ job.job_title }}</h1>
+<div class="container">
+<a href="{% url 'dashboard' %}" class="backLink">&larr; Back to Dashboard</a>
+<h2 class="title">Upload CVs for {{ job.job_title }}</h1>
+
 {% if form.errors %}
 <div class="alert alert-danger">
     <strong>Error:</strong>
@@ -18,23 +28,33 @@
     
     <div class="custom-file-upload">
         <div class="drag-drop-area" id="drop-zone">
-            Drag and drop your CV here
-            <br>
-            or
-            <br>
+            <p class="instructions">Drag and Drop your CV here</p>
+            <p class="orText">or</p>
             
         </div>
-        <!-- Hidden file input -->
+
         {{ form.resume_files }}
+        <p class="supportText">Only PDF, DOCX, RAR, ZIP files are supported</p>
         <div id="file-list" class="mt-2"></div>
-        <!-- Custom visible elements -->
-        
     </div>
     
-    <button type="submit" class="btn btn-primary mt-3">Upload Resumes</button>
+    <button type="submit" class="upload">Upload Resumes</button>
 </form>
-
+</div>
 <style>
+
+.upload{
+    display: inline-block;
+            background-color: #3a57e8;
+            color: white;
+            font-size: 1rem;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            border: none;
+    margin-top: 20px;
+}
 .custom-file-upload {
     border: 2px dashed #ccc;
     padding: 20px;

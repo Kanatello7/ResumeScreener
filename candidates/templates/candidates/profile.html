@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+{% block title %}Candidate-Profile{% endblock %}
+{% block content %}
+<a href="{% url 'candidates:job_posts' job_id=job.id %}">Back to Candidates</a>
+<div class="candidate-profile">
+    <div class="section">
+        {% if ext == 'pdf' %}
+        <a href="{{ candidate.resume.resume_file.url }}" target="_blank" class="resume-button">Candidate's Resume</a>
+        {% else %}
+        <a href="{% url 'candidates:view_resume' candidate.id %}" target="_blank" class="resume-button">
+            Candidate Resume
+        </a>
+        {% endif %}
+    </div>
+    <h1>{{ candidate.name }}</h1>
+    
+
+    
+    <div class="section">
+        
+        <label>Parsed Resume</label>
+        <p>
+        {% for key, value in existed_sections.items %}
+        {% if key not in "full_name email phone_number location" %}
+
+        <strong>{{ key|title }}</strong>
+        <br>
+        <br>
+        {{value | safe }}
+        <br>
+        <br>
+        {% endif %}
+        {% endfor %}
+    </p>
+    </div>
+    
+    <div class="section">
+        <label>AI Generated Comment</label>
+        <p>{{ candidate.ai_comment }}</p>
+    </div>
+    
+    <div class="section">
+        <label>Generated Interview Questions</label>
+        <p>{{ candidate.interview_questions }}</p>
+    </div>
+
+</div>
+
+<style>
+    .candidate-profile {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        background-color: #f9f9f9;
+    }
+    
+    .section {
+        margin-bottom: 20px;
+    }
+    
+    .section label {
+        font-weight: bold;
+        display: block;
+        margin-bottom: 5px;
+    }
+    
+    .section p {
+        margin: 0;
+        padding: 10px;
+        background-color: #fff;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+    }
+    
+    .resume-button {
+        display: inline-block;
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: #fff;
+        text-decoration: none;
+        border-radius: 4px;
+        text-align: center;
+    }
+    
+    .resume-button:hover {
+        background-color: #0056b3;
+    }
+</style>
+{% endblock %}

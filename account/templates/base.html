@@ -1,31 +1,79 @@
 {% load static %}
 <!DOCTYPE html>
-<html>
-    <head>
-        <title>{% block title %}{% endblock %}</title>
-        <link href="{% static "css/base.css" %}" rel="stylesheet">
-    </head>
-    <body>
-        <div id="header">
-            <span class="logo">TalentAI</span>
-            <span class="user">
-                {% if request.user.is_authenticated %}
-                {{ request.user.first_name|default:request.user.username }}
-                <br>
-                <a href="{% url 'password_change' %}">Change Password</a>
-                <form action="{% url 'logout' %}" method="post">
-                  {% csrf_token %}
-                  <button type="submit">Logout</button>
-                  
-              </form>
-                {% else %}
-                  <a href="{% url "login" %}">Log-in</a>
-                {% endif %}
-              </span>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    <script defer src="{% static 'js/base.js' %}"></script>
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    <header class="header">
+        <div class="toolbar">
+            <div class="brandSection">
+                <div class="brandAvatar"></div>
+                <span class="logo">Talent AI</span>
+            </div>
+      
+            <!-- User Section -->
+            <div class="userSection" id="userSection">
+                <span id="userName">{{ user }}</span>
+                <button class="userAvatarBtn" id="menuToggle">
+                    <div class="userAvatar"></div>
+                </button>
+                <div class="menu_header" id="userMenu">
+                    <div class="menuItem_header disabled">
+                        <strong id="menuUserName">Jon Snow</strong>
+                        <br>
+                        <span id="menuUserEmail">{{ user.email}}</span>
+                    </div>
+                    <div class="menuItem">
+                      <a href="{% url 'password_change' %}" class="menuLink">Change password</a> 
+                    </div>
+                    <form action="{% url 'logout' %}" method="post">
+                      {% csrf_token %}
+                      <div class="menuItem logoutItem">
+                        <button type="submit" class="logoutButton">Logout</button>
+                      </div>
+                      
+                    </form>
+      
+                </div>
+            </div>
         </div>
-        <div id="content">
-            {% block content %}
-            {% endblock %}
-        </div>
-    </body>
+      </header>
+    
+    <div class="wrapper">
+    <aside class="aside">
+        <nav>
+            <ul class="menu">
+                <li class="menuItem activeLink">
+                    <i class="fas fa-tachometer-alt menuIcon"></i>
+                    <span><a href="{% url 'dashboard' %}" class="sidebar_a">Dashboard</a></span>
+                </li>
+                <li class="menuItem">
+                    <i class="fas fa-briefcase menuIcon"></i>
+                    <span><a href="{% url 'jobs:jobs_list' %}" class="sidebar_a">Jobs</a></span>
+                </li>
+                <li class="menuItem">
+                    <i class="fas fa-users menuIcon"></i>
+                    <span>Candidates</span>
+                </li>
+                <li class="menuItem">
+                    <i class="fas fa-chart-bar menuIcon"></i>
+                    <span>Reports</span>
+                </li>
+            </ul>
+        </nav>
+    </aside>
+    <div id="content">
+        {% block content %}
+        {% endblock %}
+    </div>
+        
+    </div>
+</body>
 </html>

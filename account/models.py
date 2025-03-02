@@ -1,4 +1,3 @@
-# jobs/models.py
 from django.db import models
 from django.contrib.auth.models import User
 from django.core.validators import FileExtensionValidator
@@ -23,7 +22,7 @@ class Job(models.Model):
     experience_level = models.CharField(max_length=20, choices=EXPERIENCE_LEVEL_CHOICES)
     employment_type = models.CharField(max_length=20, choices=EMPLOYMENT_TYPE_CHOICES)
     requirements = models.TextField()
-    skills = models.TextField()  # Or use ManyToManyField for a Skill model
+    skills = models.TextField() 
     responsibilities = models.TextField()
     job_description = models.TextField()
     posted_at = models.DateTimeField(auto_now_add=True)

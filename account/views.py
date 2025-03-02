@@ -16,8 +16,16 @@ def dashboard(request):
     jobs = []
     for job in recent_jobs:
         jobs.append((job,len(job.resumes.all())))
-    print(jobs)
-    return render(request,'account/dashboard.html',{'recent_jobs': jobs})
+    all_jobs = Job.objects.all()
+    active_jobs = len(list(all_jobs))
+    total_candidates = 0
+    for job in all_jobs:
+        total_candidates += len(list(job.resumes.all()))
+    return render(request,'account/dashboard.html',{'recent_jobs': jobs,
+                                                    'active_jobs': active_jobs,
+                                                    'total_candidates':total_candidates,
+                                                    'user': request.user})
+
     
 def register(request):
     if request.method == 'POST':
@@ -35,6 +43,7 @@ def register(request):
     return render(request,
                   'account/register.html',
                   {'user_form': user_form})
+    
 
 @login_required
 def post_job(request):

@@ -1,0 +1,155 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+.aside {
+    width: 220px;
+    background-color: #fff;
+    border-right: 1px solid #e0e0e0;
+    min-height: calc(100vh - 64px);
+    padding-top: 10px;
+}
+
+.menu {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.menuItem {
+    display: flex;
+    align-items: center;
+    padding: 12px 16px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.menuItem:hover {
+    background-color: #f0f0f0;
+}
+
+.menuIcon {
+    width: 24px;
+    height: 24px;
+    margin-right: 10px;
+}
+
+.activeLink {
+    background-color: #3a57e8;
+    color: #fff;
+}
+
+.activeLink .menuIcon {
+    filter: brightness(0) invert(1); /* Make icon white */
+}
+
+
+.header {
+    background-color: #fff;
+    border-bottom: 1px solid #e0e0e0;
+    padding: 10px 0;
+}
+
+.toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 1rem;
+    min-height: 64px;
+}
+
+/* Brand Section */
+.brandSection {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.brandAvatar {
+    background-color: #3a57e8;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+}
+
+.logo {
+    color: #333;
+    font-weight: 600;
+    font-size: 1.2rem;
+}
+
+/* User Section */
+.userSection {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    position: relative;
+}
+
+.userAvatarBtn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+}
+
+.userAvatar {
+    background-color: #3a57e8;
+    color: #fff;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+
+.menu_header {
+    display: none;
+    position: absolute;
+    top: 50px;
+    right: 0;
+    background: white;
+    border-radius: 5px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    min-width: 160px;
+    z-index: 1000;
+}
+
+.menu_header.show {
+    display: block;
+}
+
+.menuItem_header {
+    padding: 10px 15px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: background 0.3s;
+}
+
+.menuItem_header:hover {
+    background-color: #f0f0f0;
+}
+
+.menuItem_header.disabled {
+    color: #666;
+    pointer-events: none;
+}
+
+.logoutItem {
+    color: #d32f2f;
+    font-weight: bold;
+}
+
+.wrapper {
+    display: flex;
+}
+
+#content {
+    flex: 1;
+
+}
+
+.sidebar_a{
+    text-decoration: none;
+    color: #333;
+}

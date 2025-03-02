@@ -1,10 +1,57 @@
-{% extends 'account_base.html' %}
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Post Job{% endblock %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/post_job.css' %}">
+{% endblock %}
+
 {% block content %}
-<h1>Post a Job</h1>
-<form method="post">
-  {% csrf_token %}
-  {{ form.as_p }}
-  <button type="submit" class="btn btn-success">Post Job</button>
-  <a href = "javascript:history.back()" > Back </a>
+<a href="{% url 'dashboard' %}" class="backLink">&larr; Back to Dashboard</a>
+<div class="container">
+
+
+  <h2 class="title">Post a New Job</h2>
+
+  <form id="postJobForm" class="form" method="post">
+    {% csrf_token %}
+    
+    <!-- Job Title -->
+    <label for="id_job_title">Job Title</label>
+    {{ form.job_title }}
+    
+    <!-- Location -->
+    <label for="id_location">Location</label>
+    {{ form.location }}
+    
+    <!-- Experience Level -->
+    <label for="id_experience_level">Experience Level</label>
+    {{ form.experience_level }}
+    
+    <!-- Employment Type -->
+    <label for="id_employment_type">Employment Type</label>
+    {{ form.employment_type }}
+    
+    <!-- Job Description -->
+    <label for="id_job_description">Job Description</label>
+    {{ form.job_description }}
+    
+    <!-- Requirements -->
+    <label for="id_requirements">Requirements</label>
+    {{ form.requirements }}
+    
+    <!-- Skills -->
+    <label for="id_skills">Skills</label>
+    {{ form.skills }}
+    
+    <!-- Responsibilities -->
+    <label for="id_responsibilities">Responsibilities</label>
+    {{ form.responsibilities }}
+    
+    <!-- Buttons -->
+    <div class="buttons">
+        <a href="javascript:history.back()" class="cancelButton">Cancel</a>
+        <button type="submit" class="submitButton">Post Job</button>
+    </div>
 </form>
+</div>
 {% endblock %}

@@ -1,6 +1,7 @@
-{% extends "account_base.html" %}
+{% extends "base.html" %}
 {% block title %}Jobs List{% endblock %}
 {% block content %}
+<a href="{% url 'dashboard' %}">Back To Dashboard</a>
 <h1>Total Jobs List</h1>
 <a href="{% url 'post_job' %}" class="btn btn-primary">Post New Job</a>
 <!-- Filter Form -->

@@ -1,70 +1,45 @@
-{% extends "account_base.html" %}
-{% block title %}Dashboard{% endblock %}
+{% extends "base.html" %}
+{% load static %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+<script defer src="{% static 'js/dashboard.js' %}"></script>
+{% endblock %}
 {% block content %}
-  <h1>Dashboard</h1>
 
-  <a href="{% url 'post_job' %}" class="btn btn-primary">Post New Job</a>
-  <br>
-  <h1>Recent Job Postings</h1>
-  <ul>
-    {% for job, resumes in recent_jobs %}
-      <li>
-        <!-- Job Title and Actions in One Line -->
-        <div class="job-header">
-          <h2 class="job-title"><a href="{% url 'candidates:job_posts' job_id=job.id %}">{{ job.job_title }}</a></h2>
+<div class="container">
+    <!-- Stats Section -->
+    <div class="statsSection">
+        <div class="statCard">
+            <h3 class="cardTitle">Active Jobs</h3>
+            <p class="cardNumber">{{ active_jobs }}</p>
         </div>
-        <p>
-          {{ resumes }} candidate{{ resumes|pluralize }}
-          | Posted {{ job.posted_at|timesince  }} ago
-        </p>
-      </li>
-    {% empty %}
-      <li>No recent jobs found.</li>
-    {% endfor %}
-  </ul>
-  
+        <div class="statCard">
+            <h3 class="cardTitle">Total Candidates</h3>
+            <p class="cardNumber">{{total_candidates}}</p>
+        </div>
+    </div>
 
-  <!-- Add CSS for Styling -->
-  <style>
-    .job-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 10px;
-    }
+    <!-- Actions Section -->
+    <div class="actions">
+        <button class="primaryButton" id="postJobBtn"><a href="{% url 'post_job' %}" class="postjob_a">Post New Job</a></button>
+    </div>
 
-    .job-title {
-      margin: 0; /* Remove default margin for h2 */
-    }
+    <!-- Lists Section -->
+    <div class="listsSection">
+        <div class="listCard">
+            <h3 class="listTitle">Recent Jobs</h3>
+            {% for job, resumes in recent_jobs %}
+                <div class="listItem">
+                    <p class="jobTitle"><a href="{% url 'candidates:job_posts' job_id=job.id %}" style="text-decoration: none; color:#555 ;">{{ job.job_title }}</a></p>
+                    <p class="jobDetails">{{ resumes }} candidate{{ resumes|pluralize }}
+                      | Posted {{ job.posted_at|timesince  }} ago</p>
+                </div>
+            {% empty %}
+            <h3 class="listTitle">No recent jobs found.</h3>
+            {% endfor %}
+        </div>
 
-    .job-actions {
-      display: flex;
-      gap: 10px; /* Space between buttons */
-    }
-
-    .resume-item {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 5px;
-    }
-
-    .resume-actions {
-      display: flex;
-      gap: 10px; /* Space between buttons */
-    }
-
-    .btn-link {
-      text-decoration: none;
-      color: #007bff; /* Bootstrap primary color */
-      padding: 5px 10px;
-      border: 1px solid #007bff;
-      border-radius: 4px;
-    }
-
-    .btn-link:hover {
-      background-color: #007bff;
-      color: white;
-    }
-  </style>
+    </div>
+</div>
 {% endblock %}

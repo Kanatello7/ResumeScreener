@@ -1,27 +1,39 @@
-{% extends "base.html" %}
- {% block title %}Log-in{% endblock %}
- {% block content %}
-  <h1>Log-in</h1>
-  <p>Please, use the following form to log-in.
-    If you don't have an account <a href="{% url "register" %}">register here</a>.
-  </p>
-  {% if form.errors %}
-    <p>
-      Your username and password didn't match.
-      Please try again.
-    </p>
-  {% endif %}
-  <div class="login-form">
-    <form action="{% url 'login' %}" method="post">
-      {{ form.as_p }}
-      {% csrf_token %}
-      <input type="hidden" name="next" value="{{ next }}" />
-      <p><input type="submit" value="Log-in"></p>
-    </form>
-    <p>
-      <a href="{% url "password_reset" %}">
-        Forgotten your password?
-      </a>
-    </p>
-  </div>
- {% endblock %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="{% static 'css/login.css' %}">
+    <script src="{% static 'js/login.js' %}"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="formWrapper">
+            <div class="logo">
+                <img src="{% static 'images/LoginIcon.png' %}" alt="Login Icon" />
+            </div>
+            <h2 class="title">Welcome</h2>
+            {% if form.errors %}
+                <p class="error-message">
+                    Your username and password didn't match. Please try again.
+                </p>
+            {% endif %}
+
+            <form id="loginForm" class="form" action="{% url 'login' %}" method="post">
+              {% csrf_token %}
+                <input type="text" name="username" id="email" placeholder="Username" required>
+                <input type="password" name="password"  id="password" placeholder="Password" required>
+
+                <input type="hidden" name="next" value="{{ next }}" />
+                
+                <button type="submit" class="submitButton">Sign in</button>
+                <p class="signupText">
+                    Don’t have an account? <a href="{% url 'register' %}">Sign up</a>
+                </p>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

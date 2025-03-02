@@ -1,0 +1,149 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f5f9ff;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    padding: 2rem;
+}
+
+/* Stats Section */
+.statsSection {
+    display: flex;
+    gap: 1rem;
+}
+
+.statCard {
+    flex: 1;
+    padding: 1rem;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.cardTitle {
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+}
+
+.cardNumber {
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.cardPercent {
+    color: #28a745;
+    font-size: 0.9rem;
+}
+
+/* Actions Section */
+.actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: left;
+}
+
+.primaryButton {
+    background-color: #007bff;
+    color: white;
+    font-size: 1rem;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.primaryButton:hover {
+    background-color: #0056b3;
+}
+
+.outlineButton {
+    background-color: transparent;
+    color: #007bff;
+    border: 2px solid #007bff;
+    font-size: 1rem;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.outlineButton:hover {
+    background-color: #007bff;
+    color: white;
+}
+
+/* Lists Section */
+.listsSection {
+    display: flex;
+    gap: 1rem;
+}
+
+.listCard {
+    flex: 1;
+    padding: 1rem;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.listTitle {
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.listItem {
+    margin-top: 1rem;
+    background-color: #f8faff;
+    padding: 0.75rem;
+    border-radius: 4px;
+}
+
+.jobTitle, .applicantName {
+    font-weight: bold;
+}
+
+.jobDetails, .applicantDetails {
+    font-size: 0.9rem;
+    color: #555;
+}
+
+
+.menuItem a {
+    text-decoration: none;
+    text-align: center;
+    color: #333;
+    display: block;
+    width: 100%;
+}
+
+.postjob_a {
+    text-decoration: none;
+    color: white;
+    display: block;
+    width: 100%;
+}
+
+.logoutItem {
+    text-align: center;
+    padding: 0;
+}
+
+.logoutButton {
+    width: 100%;
+    background: none;
+    border: none;
+    font-size: 0.9rem;
+    color: #d32f2f;
+    font-weight: bold;
+    cursor: pointer;
+    padding: 10px 15px;
+}
+
+.logoutButton:hover {
+    background-color: #ffe5e5;
+}

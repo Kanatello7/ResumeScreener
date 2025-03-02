@@ -1,11 +1,32 @@
-{% extends "base.html" %}
- {% block title %}Create an account{% endblock %}
- {% block content %}
-  <h1>Create an account</h1>
-  <p>Please, sign up using the following form:</p>
-  <form method="post">
-    {{ user_form.as_p }}
-    {% csrf_token %}
-    <p><input type="submit" value="Sign Up"></p>
-  </form>
- {% endblock %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register Page</title>
+    <link rel="stylesheet" href="{% static 'css/register.css' %}">
+    <script defer src="{% static 'js.register.js' %}"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="formWrapper">
+            <div class="logo">
+                <img src="person-add-icon.svg" alt="Register Icon">
+            </div>
+            <h2 class="title">Create an Account</h2>
+            <form id="registerForm" class="form" method="post">
+              {% csrf_token %}
+              <input type="text" name="username" id="fullName" placeholder="Username" required>
+              <input type="email" name="email" id="email" placeholder="Email" required>
+              <input type="password" name="password" id="password" placeholder="Password" required>
+              <input type="password" name="password2" id="confirmPassword" placeholder="Confirm Password" required>
+              <button type="submit" class="submitButton">Create an Account</button>
+              <p class="signinText">
+                  Already have an account? <a href="{% url 'login' %}">Sign in</a>
+              </p>
+          </form>
+        </div>
+    </div>
+</body>
+</html>

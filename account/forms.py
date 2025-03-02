@@ -37,30 +37,40 @@ class JobPostForm(forms.ModelForm):
             'responsibilities', 'job_description'
         ]
         widgets = {
-            'requirements': forms.Textarea(
-                attrs={
-                    'rows': 4,
-                    'style': 'width: 1000px; height: 150px;'
-                }
-            ),
-            'skills': forms.Textarea(
-                attrs={
-                    'rows': 4,
-                    'style': 'width: 1000px; height: 150px;'
-                }
-            ),
-            'responsibilities': forms.Textarea(
-                attrs={
-                    'rows': 4,
-                    'style': 'width: 1000px; height: 150px;'
-                }
-            ),
-            'job_description': forms.Textarea(
-                attrs={
-                    'rows': 4,
-                    'style': 'width: 1000px; height: 150px;'
-                }
-            ),
+            'job_title': forms.TextInput(attrs={
+                'placeholder': 'e.g. Frontend Developer',
+                'class': 'form-control'
+            }),
+            'location': forms.TextInput(attrs={
+                'placeholder': 'e.g. New York, NY (Remote Available)',
+                'class': 'form-control'
+            }),
+            'experience_level': forms.Select(attrs={
+                'class': 'form-control'
+            }),
+            'employment_type': forms.Select(attrs={
+                'class': 'form-control'
+            }),
+            'requirements': forms.Textarea(attrs={
+                'rows': 4,
+                'placeholder': 'Enter the key requirements...',
+                'class': 'form-control'
+            }),
+            'skills': forms.Textarea(attrs={
+                'rows': 4,
+                'placeholder': 'Enter required skills...',
+                'class': 'form-control'
+            }),
+            'responsibilities': forms.Textarea(attrs={
+                'rows': 4,
+                'placeholder': 'Enter key responsibilities...',
+                'class': 'form-control'
+            }),
+            'job_description': forms.Textarea(attrs={
+                'rows': 4,
+                'placeholder': 'Enter the full job description...',
+                'class': 'form-control'
+            }),
         }
 
 class MultipleFileInput(forms.ClearableFileInput):

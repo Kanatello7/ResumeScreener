@@ -1,5 +1,14 @@
-<!-- templates/widgets/multiple_file_input.html -->
 <div class="custom-file">
     <input type="file" name="{{ widget.name }}"{% include "django/forms/widgets/attrs.html" %}>
-    <button><label class="custom-file-label" for="{{ widget.attrs.id }}">Browse Files</label></button>
+    <button style="border: none; background: none; padding: 0;">
+        <label class="custom-file-label" for="{{ widget.attrs.id }}" style="display: inline-block;
+            background-color: #3a57e8;
+            color: white;
+            font-size: 1rem;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            border: none;">Browse Files</label>
+    </button>
 </div>

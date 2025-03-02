@@ -1,9 +1,22 @@
-{% extends "base.html" %}
- {% block title %}Welcome{% endblock %}
- {% block content %}
-  <h1>Welcome {{ new_user.first_name }}!</h1>
-  <p>
-    Your account has been successfully created. 
-    Now you can <a href="{% url "login" %}">log in</a>.
-  </p>
- {% endblock %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome</title>
+    <link rel="stylesheet" href="{% static 'css/welcome.css' %}">
+</head>
+<body>
+
+<div class="container">
+    <div class="welcomeWrapper">
+        <h1 class="welcomeTitle">Welcome, {{ new_user }}!</h1>
+        <p class="welcomeText">
+            Your account has been successfully created.<br>
+            Now you can <a href="{% url 'login' %}" class="loginLink">log in</a>.
+        </p>
+    </div>
+</div>
+</body>
+</html>

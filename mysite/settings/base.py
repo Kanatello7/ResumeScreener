@@ -46,6 +46,7 @@ REST_FRAMEWORK = {
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60),
     'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
+    'SIGNING_KEY': os.getenv('JWT_SECRET')
 }
 
 MIDDLEWARE = [
@@ -77,6 +78,10 @@ TEMPLATES = [
             ],
         },
     },
+]
+
+STATIC_URL = '/static/'
+STATICFILES_DIRS = [
 ]
 
 WSGI_APPLICATION = 'mysite.wsgi.application'

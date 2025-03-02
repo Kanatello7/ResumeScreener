@@ -1,0 +1,110 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f8fafc;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+    margin-top: 2rem;
+}
+
+.backLink {
+    display: inline-block;
+    margin-bottom: 1rem;
+    color: #3a57e8;
+    text-decoration: none;
+    font-size: 0.9rem;
+}
+
+.backLink:hover {
+    text-decoration: underline;
+}
+
+.title {
+    margin-bottom: 1rem;
+    font-weight: 600;
+    font-size: 1.5rem;
+}
+
+/* Drop Area */
+.dropArea {
+    border: 2px dashed #ccc;
+    border-radius: 8px;
+    padding: 2rem;
+    text-align: center;
+    margin-top: 1rem;
+    background-color: #f8faff;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.dropArea:hover {
+    background-color: #eef5ff;
+}
+
+.instructions {
+    margin-bottom: 0.5rem;
+    font-size: 1rem;
+}
+
+.orText {
+    margin-bottom: 0.5rem;
+    font-size: 1rem;
+}
+
+.supportText {
+    display: block;
+    margin-top: 0.75rem;
+    color: #777;
+    font-size: 0.85rem;
+}
+
+/* File Name */
+.fileName {
+    margin-top: 1rem;
+    color: #333;
+    font-size: 0.9rem;
+}
+
+/* Browse Button */
+.browseButton {
+    display: inline-block;
+    background-color: #3a57e8;
+    color: white;
+    font-size: 1rem;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.browseButton:hover {
+    background-color: #2b45b0;
+}
+
+.fileList {
+    margin: 1rem 0;
+}
+
+.fileItem {
+    padding: 0.5rem;
+    background: #f5f5f5;
+    margin: 0.25rem 0;
+    border-radius: 4px;
+}
+
+.highlight {
+    border-color: #2196F3;
+    background-color: #e3f2fd;
+}
+
+.alert-error {
+    color: #dc3545;
+    padding: 0.75rem;
+    margin-bottom: 1rem;
+    border: 1px solid #f5c2c7;
+    border-radius: 4px;
+}
