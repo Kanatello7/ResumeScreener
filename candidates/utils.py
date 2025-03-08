@@ -74,7 +74,7 @@ def extract_sections(text):
     return normalized
 
 def preprocess_text(text):
-    text = re.sub('\s+', ' ', text)
+    text = re.sub(r'\s+', ' ', text)
     return text.strip()
 
 nlp = spacy.load('en_core_web_sm')
@@ -163,7 +163,7 @@ skills_list = skills_df.stack().tolist()
  
 def extract_skills(text):
     skills_set = set()
-    for i in re.split('[,\s]+',text):
+    for i in re.split(r'[,\s]+',text):
         if i.lower() in skills_list:
             skills_set.add(i)
     return ", ".join(list(skills_set))
