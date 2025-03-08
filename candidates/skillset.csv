@@ -1,14 +1,24 @@
-Programming Languages,Databases,ML,cloud computing,Devops,CI/CD pipelines cybersecurity,web,frameworks,soft skils
-python,postgresql,ml,aws,docker,penetration testing,html,,leadership
-c,mongodb,dl,google cloud,kubernets,encryption,css,,teamwork
-c++,mysql,machine learning,azure,,firewalls,js,,communication
-java,sql,deep learning,,,,react,,
-javascript,sqlite,tensorflow,,,,django,,
-fortran,nosql,pytorch,,,,flask,,
-r,,scikit-learn,,,,nodejs,,
-rust,,,,,,angular,,
-ruby,,,,,,vuejs,,
-c#,,,,,,,,
-kotlin,,,,,,,,
-swift,,,,,,,,
-go,,,,,,,,
+Programming Languages,Databases,ML,cloud computing,Devops,ci/cd pipelines cybersecurity,web,frameworks,soft skils,automation
+python,postgresql,ml,aws,docker,penetration testing,html,Spacy,leadership,pywinauto
+c,mongodb,dl,google cloud,kubernets,encryption,css,opencv,teamwork,selenium
+c++,mysql,machine learning,azure,ci/cd,firewalls,js,transformers,communication,Robot Framework
+java,sql,deep learning,IBM Cloud,Terraform,Vulnerability Assessment,react,pandas,problem-solving,AutoIt
+javascript,sqlite,tensorflow,Alibaba Cloud,Ansible,Network Security,django,numpy,critical thinking,UiPath
+fortran,nosql,pytorch,Oracle Cloud Infrastructure (OCI),Puppet,Ethical Hacking,flask,matplotlib,team collaboration,Blue Prism
+r,Oracle Database,scikit-learn,Heroku,Chef,Intrusion Detection Systems (IDS),nodejs,seaborn,Time Management,Appium (Mobile Automation)
+rust,Cassandra,XGBoost,DigitalOcean,Jenkins,Intrusion Prevention Systems (IPS),angular,Spring Boot (Java),Adaptability,TestComplete
+ruby,MariaDB,Keras,OpenStack,GitLab CI/CD,SIEM (Security Information and Event Management),vuejs,Ruby on Rails (Ruby),Emotional Intelligence,Playwright
+c#,Couchbase,LightGBM,Cloudflare,CircleCI,Zero Trust Architecture,WebAssembly (Wasm),Laravel (PHP),Conflict Resolution,Puppeteer
+kotlin,DynamoDB,Reinforcement Learning,Linode,ArgoCD,Nmap,GraphQL,Express.js (Node.js),Negotiation,JMeter (Load Testing)
+swift,Firebase Realtime Database,AutoML,Rackspace,Prometheus,Burp Suite,WebSockets,Flask (Python),Public Speaking,Selenium Grid
+go,Snowflake,GANs (Generative Adversarial Networks),VMware,Grafana,Wireshark,WebGL,FastAPI (Python),Mentorship,Postman (API Automation)
+TypeScript,,MLflow,,Nagios,Kali Linux,Three.js,.NET Core (C#),Creativity,SoapUI
+Scala,,,,,Digital Forensics,Next.js,,Strategic Thinking,
+Haskell,,,,,,Tailwind CSS,,Decision-Making,
+Perl,,,,,,,,,
+Lua,,,,,,,,,
+Dart,,,,,,,,,
+Elixir,,,,,,,,,
+Clojure,,,,,,,,,
+Racket,,,,,,,,,
+Erlang,,,,,,,,,

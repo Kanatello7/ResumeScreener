@@ -32,7 +32,7 @@ def jobs_list(request):
     for job in jobs_qs:
         jobs.append((job,len(job.resumes.all())))
     print(jobs)
-    return render(request,'jobs/jobs_list.html',{'jobs': jobs})
+    return render(request,'jobs/jobs_list.html',{'jobs': jobs, 'active_page':'jobs'})
 
 @login_required
 def delete_job(request, job_id):

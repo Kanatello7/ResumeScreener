@@ -1,0 +1,106 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+}
+
+.container {
+    padding: 20px;
+    background-color: #f9f9f9;
+    min-height: 100vh;
+}
+
+/* Top Actions */
+.topActions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+/* Back Link */
+.backLink {
+    text-decoration: none;
+    color: #0070f3;
+    font-weight: 500;
+    font-size: 1rem;
+}
+
+.backLink:hover {
+    text-decoration: underline;
+}
+
+/* Resume Button */
+.resumeBtn {
+    background-color: #0070f3;
+    color: white;
+    font-size: 1rem;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.resumeBtn:hover {
+    background-color: #005bb5;
+}
+
+/* Candidate Header */
+.candidateHeader {
+    padding: 1rem;
+    margin-bottom: 1rem;
+    text-align: center;
+    background: white;
+    border-radius: 6px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.candidateName {
+    margin: 0;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+/* Info Sections */
+.infoSection {
+    padding: 1rem;
+    margin-bottom: 1rem;
+    background: white;
+    border-radius: 6px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.infoBox {
+    padding: 0.5rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background-color: #fafafa;
+}
+
+.largeBox {
+    min-height: 120px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background-color: #fafafa;
+    padding: 0.5rem;
+}
+
+/* Approve Section */
+.approveSection {
+    text-align: right;
+}
+
+/* Approve Button */
+.approveBtn {
+    background-color: #28a745;
+    color: white;
+    font-size: 1rem;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.approveBtn:hover {
+    background-color: #1e7e34;
+}

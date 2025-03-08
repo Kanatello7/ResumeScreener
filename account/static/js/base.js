@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
-    const menuItems = document.querySelectorAll(".menuItem");
+    const menuItems = document.querySelectorAll(".menuItemlink");
 
     menuItems.forEach((item) => {
         item.addEventListener("click", function () {
@@ -8,18 +8,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
             // Add active class to clicked item
             item.classList.add("activeLink");
-
-            // Redirect to the corresponding page
-            window.location.href = item.getAttribute("data-path");
         });
-    });
-
-    // Set active link based on current URL
-    const currentPath = window.location.pathname;
-    menuItems.forEach((item) => {
-        if (item.getAttribute("data-path") === currentPath) {
-            item.classList.add("activeLink");
-        }
     });
 });
 

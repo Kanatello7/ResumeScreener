@@ -26,7 +26,7 @@ class Job(models.Model):
     responsibilities = models.TextField()
     job_description = models.TextField()
     posted_at = models.DateTimeField(auto_now_add=True)
-    
+    embedded_details = models.JSONField(default=dict, blank=True, null=True)   
     def __str__(self):
         return self.job_title
 

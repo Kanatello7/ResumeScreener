@@ -1,0 +1,166 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+}
+
+.container {
+    padding: 20px;
+    background-color: #f9f9f9;
+    min-height: 100vh;
+}
+
+/* Back Link */
+.backLink {
+    display: inline-block;
+    margin-bottom: 1rem;
+    text-decoration: none;
+}
+
+.backButton {
+    background: none;
+    border: none;
+    font-size: 1rem;
+    color: #3a57e8;
+    cursor: pointer;
+}
+
+.backButton:hover {
+    text-decoration: underline;
+}
+
+/* Job Header */
+.jobHeader {
+    background: white;
+    padding: 1rem;
+    border-radius: 6px;
+    margin-bottom: 1rem;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.jobTitle {
+    margin: 0 0 0.5rem;
+}
+
+.jobMeta {
+    color: #666;
+    margin-bottom: 0.5rem;
+}
+
+.jobDescription {
+    margin: 0;
+    color: #333;
+}
+
+/* Actions */
+.actions {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.uploadCvButton, .filterButton {
+    background-color: #3a57e8;
+    color: white;
+    font-size: 1rem;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.filterButton {
+    background-color: transparent;
+    color: #3a57e8;
+    border: 2px solid #3a57e8;
+}
+
+.uploadCvButton:hover, .filterButton:hover {
+    background-color: #2b45b0;
+    color: white;
+}
+
+/* Candidates */
+.candidatesTitle {
+    margin-bottom: 0.5rem;
+}
+
+.candidatesWrapper {
+    background: white;
+    border-radius: 6px;
+    padding: 1rem;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Candidate Card */
+.candidateCard {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.6rem 0;
+    border-bottom: 1px solid #eee;
+}
+
+.candidateCard:last-child {
+    border-bottom: none;
+}
+
+.candidateInfo {
+    flex: 1;
+}
+
+.candidateName {
+    font-weight: bold;
+    margin: 0;
+}
+
+.candidateRole {
+    margin: 0.2rem 0 0;
+    color: #666;
+}
+
+.candidateLink {
+    text-decoration: none;
+    color: inherit;
+}
+
+/* Delete Button */
+.deleteBtn {
+    background-color: #d32f2f;
+    color: white;
+    font-size: 0.9rem;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.deleteBtn:hover {
+    background-color: #a52a2a;
+}
+
+/* Filter Form */
+.filterForm {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+.filterForm input[type="text"],
+.filterForm input[type="number"] {
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 0.9rem;
+}
+
+.clearFilter {
+    color: #d32f2f;
+    font-size: 0.9rem;
+    margin-left: 10px;
+    text-decoration: none;
+}
+
+.clearFilter:hover {
+    text-decoration: underline;
+}

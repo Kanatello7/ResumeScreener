@@ -80,9 +80,7 @@ TEMPLATES = [
     },
 ]
 
-STATIC_URL = '/static/'
-STATICFILES_DIRS = [
-]
+
 
 WSGI_APPLICATION = 'mysite.wsgi.application'
 

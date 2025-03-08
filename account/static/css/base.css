@@ -17,23 +17,49 @@ body {
     margin: 0;
 }
 
-.menuItem {
+.menuItemlink {
     display: flex;
     align-items: center;
     padding: 12px 16px;
     font-size: 1rem;
     cursor: pointer;
     transition: background 0.3s;
+    gap: 10px;
 }
 
-.menuItem:hover {
+.menuItem_h {
+    padding: 10px 15px; /* Add padding to menu items */
+    display: flex;
+    align-items: center;
+}
+
+.changeButton, .logoutButton {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Space between icon and text */
+    text-decoration: none;
+    color: inherit;
+    width: 100%; /* Ensure full width */
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    font-size: inherit;
+    text-align: left; /* Align text to the left */
+}
+
+.logoutButton {
+    color: #d32f2f; /* Logout button specific style */
+    font-weight: bold;
+}
+
+.menuItemlink:hover {
     background-color: #f0f0f0;
 }
 
 .menuIcon {
-    width: 24px;
-    height: 24px;
-    margin-right: 10px;
+    width: 20px; /* Adjust size as needed */
+    height: 20px;
 }
 
 .activeLink {
@@ -57,7 +83,7 @@ body {
     justify-content: space-between;
     align-items: center;
     padding: 0 1rem;
-    min-height: 64px;
+    min-height: 45px;
 }
 
 /* Brand Section */
@@ -96,11 +122,12 @@ body {
 }
 
 .userAvatar {
-    background-color: #3a57e8;
-    color: #fff;
+
     width: 40px;
     height: 40px;
     border-radius: 50%;
+    background-size: cover;
+    background-position: center;
 }
 
 .menu_header {
@@ -124,6 +151,14 @@ body {
     cursor: pointer;
     font-size: 0.9rem;
     transition: background 0.3s;
+    margin-bottom: 0px;
+}
+#menuItem_hr {
+    margin: 0; /* Remove default margin */
+    padding: 0; /* Remove default padding */
+    border: none; /* Remove default border */
+    border-top: 1px solid #e0e0e0; /* Add a custom border */
+    margin-bottom: 10px;
 }
 
 .menuItem_header:hover {

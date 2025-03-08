@@ -37,9 +37,22 @@ def job_posts(request, job_id):
             )
     candidates = job.candidates.all()
     
+    name_query = request.GET.get('name', '')
+    min_match = request.GET.get('min_match', 0)
+
+    if name_query:
+        candidates = candidates.filter(name__icontains=name_query)
+    
+    if min_match:
+        candidates = candidates.filter(match_percentage__gte=float(min_match))
+        
     return render(request, 'candidates/job-posts.html', {
         'job': job,
         'candidates': candidates,
+        'current_filters': {
+            'name': name_query,
+            'min_match': min_match
+        }
     })
 
 
@@ -50,6 +63,7 @@ def view_resume(request, candidate_id):
     google_docs_url = f"https://docs.google.com/viewer?url={quote(resume_url)}"
     return redirect(google_docs_url)
 
+import json
 @login_required
 def candidate_profile(request, candidate_id):
     candidate = get_object_or_404(Candidate, id=candidate_id)
@@ -64,12 +78,12 @@ def candidate_profile(request, candidate_id):
     existed_sections = {'personal information': ""}
     personal_info = ""
     for key, value in candidate.details.items():
-        if value != None and value != 'Unknown' and key not in ['raw_text', 'sections'] :
+        if value != None and value != 'Unknown' and key not in ['raw_text', 'sections', 'full_name', 'email', 'phone_number', 'location'] :
             value = value.replace("\n", "<br>")
             existed_sections[key] = value
         
         if key == 'full_name' or key == 'email' or key == 'phone_number' or key == 'location':
-            personal_info += f"{key}: {value}" + "<br>"
+            personal_info += f"{key.capitalize().replace('_', ' ')}: {value}" + "<br>"
     existed_sections['personal information'] = personal_info
     
     return render(request, 'candidates/profile.html', {'candidate':candidate,

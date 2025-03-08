@@ -9,6 +9,10 @@ import tempfile
 import patoolib
 from django.core.exceptions import ValidationError
 from django.core.files import File  
+from sentence_transformers import SentenceTransformer
+
+# Load a sentence transformer model
+model = SentenceTransformer('sentence-transformers/all-MiniLM-L6-v2')
 
 @login_required
 def dashboard(request):
@@ -21,10 +25,12 @@ def dashboard(request):
     total_candidates = 0
     for job in all_jobs:
         total_candidates += len(list(job.resumes.all()))
+        
     return render(request,'account/dashboard.html',{'recent_jobs': jobs,
                                                     'active_jobs': active_jobs,
                                                     'total_candidates':total_candidates,
-                                                    'user': request.user})
+                                                    'user': request.user,
+                                                    'active_page': 'dashboard'})
 
     
 def register(request):
@@ -43,20 +49,30 @@ def register(request):
     return render(request,
                   'account/register.html',
                   {'user_form': user_form})
-    
+  
+def extract_embeddings(job):
+    if not job:
+        return {}
+    details = {}
+    fields = ['job_title','location','experience_level','employment_type','requirements', 'skills', 'responsibilities', 'job_description']
+    details = {field: model.encode(getattr(job, field, "") or "").tolist() for field in fields}
 
+    return details
+ 
 @login_required
 def post_job(request):
+    page = request.GET.get('next')
     if request.method == 'POST':    
         form = JobPostForm(request.POST)
         if form.is_valid():
             job = form.save(commit=False)
             job.employer = request.user
+            job.embedded_details = extract_embeddings(job)
             job.save()
             return redirect('upload_resumes', job_id=job.id)
     else:
         form = JobPostForm()
-    return render(request, 'account/post_job.html', {'form': form})
+    return render(request, 'account/post_job.html', {'form': form, 'back_page':page})
 
 def extract_archive(uploaded_file, extract_dir):
     """
@@ -82,6 +98,7 @@ def extract_archive(uploaded_file, extract_dir):
 @login_required
 def upload_resumes(request, job_id):
     job = Job.objects.get(id=job_id)
+    page = request.GET.get('next')
     if request.method == 'POST':
         form = ResumeUploadForm(request.POST, request.FILES)
         if form.is_valid():
@@ -119,7 +136,7 @@ def upload_resumes(request, job_id):
             return redirect('candidates:job_posts', job_id=job.id)
     else:
         form = ResumeUploadForm()
-    return render(request, 'account/upload_resumes.html', {'form': form, 'job': job})
+    return render(request, 'account/upload_resumes.html', {'form': form, 'job': job, 'back_page':page})
 
 
 

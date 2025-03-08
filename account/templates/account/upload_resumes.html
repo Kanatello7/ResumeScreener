@@ -8,7 +8,14 @@
 
 {% block content %}
 <div class="container">
+{% if back_page ==  'posts' %}
+<a href="{% url 'candidates:job_posts' job_id=job.id %}" class="backLink">&larr; Back to Job-posts</a>
+{% elif back_page == 'jobs' %}
+<a href="{% url 'jobs:jobs_list'%}" class="backLink">&larr; Back to Jobs</a>
+
+{% else %}
 <a href="{% url 'dashboard' %}" class="backLink">&larr; Back to Dashboard</a>
+{% endif %}
 <h2 class="title">Upload CVs for {{ job.job_title }}</h1>
 
 {% if form.errors %}

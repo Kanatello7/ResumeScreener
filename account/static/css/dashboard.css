@@ -23,16 +23,17 @@ body {
     background: white;
     border-radius: 8px;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-    text-align: center;
+    text-align: left;
 }
 
 .cardTitle {
     font-weight: 500;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.2rem;
 }
 
 .cardNumber {
     font-size: 1.5rem;
+    margin-top: 0.3rem;
     font-weight: 700;
 }
 
@@ -128,22 +129,3 @@ body {
     width: 100%;
 }
 
-.logoutItem {
-    text-align: center;
-    padding: 0;
-}
-
-.logoutButton {
-    width: 100%;
-    background: none;
-    border: none;
-    font-size: 0.9rem;
-    color: #d32f2f;
-    font-weight: bold;
-    cursor: pointer;
-    padding: 10px 15px;
-}
-
-.logoutButton:hover {
-    background-color: #ffe5e5;
-}

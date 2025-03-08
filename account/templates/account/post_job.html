@@ -6,7 +6,11 @@
 {% endblock %}
 
 {% block content %}
+{% if back_page ==  'jobs' %}
+<a href="{% url 'jobs:jobs_list'%}" class="backLink">&larr; Back to Jobs</a>
+{% else %}
 <a href="{% url 'dashboard' %}" class="backLink">&larr; Back to Dashboard</a>
+{% endif %}
 <div class="container">
 
 

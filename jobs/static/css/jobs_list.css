@@ -1,0 +1,159 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+}
+
+.container_jobs {
+    padding: 20px;
+    background-color: #f9f9f9;
+    min-height: 100vh;
+}
+
+/* Header */
+.header_jobs {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+/* Back Link */
+.backLink {
+    text-decoration: none;
+    color: #0070f3;
+    font-weight: 500;
+    font-size: 1rem;
+}
+
+.backLink:hover {
+    text-decoration: underline;
+}
+
+/* Post Job Button */
+.postJobBtn {
+    background-color: #0070f3;
+    color: white;
+    font-size: 1rem;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.postJobBtn:hover {
+    background-color: #005bb5;
+}
+
+/* Title */
+.title {
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+}
+
+/* Job Cards */
+.jobCard {
+    background: white;
+    padding: 1rem;
+    border-radius: 6px;
+    margin-bottom: 1rem;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Job Info */
+.jobInfo {
+    padding-bottom: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+.jobInfo h3 {
+    margin: 0 0 0.3rem;
+}
+
+.jobInfo p {
+    margin: 0;
+    color: #666;
+}
+
+/* Job Actions */
+.jobActions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.5rem;
+    margin-top: 10px;
+}
+
+.uploadCvBtn, .reportBtn {
+    background-color: #0070f3;
+    color: white;
+    font-size: 0.9rem;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.uploadCvBtn:hover, .reportBtn:hover {
+    background-color: #005bb5;
+}
+
+/* Delete Button */
+.deleteBtn {
+    background-color: #d32f2f;
+    color: white;
+    font-size: 0.9rem;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.deleteBtn:hover {
+    background-color: #a52a2a;
+}
+
+/* Filter Form */
+.filter-form {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    padding: 1rem;
+    background: white;
+    border-radius: 6px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.filter-form label {
+    font-size: 0.9rem;
+    color: #333;
+    margin-right: 0.5rem;
+}
+
+.filter-form select {
+    padding: 8px 12px;
+    font-size: 0.9rem;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: white;
+    color: #333;
+    cursor: pointer;
+}
+
+.filter-form select:hover {
+    border-color: #0070f3;
+}
+
+.filter-form button {
+    background-color: #0070f3;
+    color: white;
+    font-size: 0.9rem;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.filter-form button:hover {
+    background-color: #005bb5;
+}

@@ -1,25 +1,87 @@
-{% extends "base.html" %}
+{% extends 'base.html' %}
+{% load static %}
 {% block title %}Job-posts{% endblock %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/job_posts.css' %}">
+{% endblock %}
 {% block content %}
-<a href="{% url 'jobs:jobs_list' %}">Back to Jobs List</a>
-<h1>{{ job.job_title }}</h1>
-<a href="{% url 'upload_resumes' job_id=job.id %}?next=job-posts" class="btn btn-link">Upload CV</a>
+<div class="container">
+    <!-- Back to Jobs List -->
+    <a href="{% url 'jobs:jobs_list' %}" class="backLink">
+        <button class="backButton">← Back to Jobs List</button>
+    </a>
 
-<h1>Candidates List</h1>
-{% if candidates %}
-  <ul>
-    {% for candidate in candidates %}
-      <li class="candidate-item">
-        <h3><a href="{% url 'candidates:candidate_profile' candidate_id=candidate.id %}">{{candidate.name}}</a></h3>
-        <div class="candidate-actions">
-          <a href="{% url 'candidates:delete_resume' candidate.resume.id %}" 
-             onclick="return confirm('Are you sure you want to delete this resume?');" 
-             class="btn btn-link">Delete</a>
+    <!-- Job Header -->
+    <div class="jobHeader">
+        <h2 class="jobTitle">{{ job.job_title }}</h2>
+        <p class="jobMeta">{{ job.location}} | {{ job.get_employment_type_display}} | {{ job.get_experience_level_display }}</p>
+        <p class="jobDescription">
+            {{ job.job_description}}
+        </p>
+    </div>
+
+    <!-- Actions -->
+    <!-- Replace the actions div with this -->
+    <div class="actions">
+        <button class="uploadCvButton">
+            <a href="{% url 'upload_resumes' job_id=job.id %}?next=posts" 
+               style="text-decoration: none; color: white;">
+                Upload CV
+            </a>
+        </button>
+
+        <form method="GET" class="filterForm">
+            <input type="text" 
+                   name="name" 
+                   placeholder="Search by name"
+                   value="{{ current_filters.name }}">
+
+            <input type="number" 
+                   name="min_match" 
+                   placeholder="Min match %"
+                   min="0" 
+                   max="100" 
+                   step="1"
+                   value="{{ current_filters.min_match }}">
+
+            <button type="submit" class="filterButton">Filter</button>
+            {% if current_filters.name or current_filters.min_match %}
+                <a href="{% url 'candidates:job_posts' job.id %}" class="clearFilter">
+                    Clear Filters
+                </a>
+            {% endif %}
+        </form>
+    </div>
+
+    <!-- Candidates List -->
+    <h3 class="candidatesTitle">Candidates List</h3>
+  
+    {% if candidates %}
+    <div class="candidatesWrapper">
+        {% for candidate in candidates %}
+        <div class="candidateCard">
+            <div class="candidateInfo">
+                <a href="candidate-detail.html" class="candidateLink">
+                    <h4 class="candidateName"><a href="{% url 'candidates:candidate_profile' candidate_id=candidate.id %}" style="text-decoration: none; color: black;">{{candidate.name}}</a></h4>
+                    <p class="candidateRole">{{ candidate.email }} | 92% match</p>
+                </a>
+            </div>
+            <a href="{% url 'candidates:delete_resume' candidate.resume.id %}"
+              onclick="return confirm('Are you sure you want to delete this resume?');"
+              style="text-decoration: none;color: white;">
+              <button class="deleteBtn" data-id="1">Delete</button>
+            </a>
         </div>
-      </li>
-    {% endfor %}
-  </ul>
-{% else %}
-  <p>No candidates found</p>
-{% endif %}
+        {% endfor %}
+    {% else %}
+    <div class="candidatesWrapper">
+      <div class="candidateCard">
+        <div class="candidateInfo">
+                <h4 class="candidateName">No Candidates Found</h4>            
+        </div>
+      </div>
+    </div>
+    {% endif %}
+    </div>
+</div>
 {% endblock %}

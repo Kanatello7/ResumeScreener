@@ -7,7 +7,7 @@
     <title>{% block title %}{% endblock %}</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="{% static 'css/base.css' %}">
-    <script defer src="{% static 'js/base.js' %}"></script>
+    <script src="{% static 'js/base.js' %}"></script>
     {% block extra_css %}{% endblock %}
 </head>
 <body>
@@ -22,25 +22,30 @@
             <div class="userSection" id="userSection">
                 <span id="userName">{{ user }}</span>
                 <button class="userAvatarBtn" id="menuToggle">
-                    <div class="userAvatar"></div>
+                    <div class="userAvatar" style="background-image: url('{% static 'images/profile.png' %}');"></div>
                 </button>
                 <div class="menu_header" id="userMenu">
-                    <div class="menuItem_header disabled">
-                        <strong id="menuUserName">Jon Snow</strong>
+                    <div class="menuItem_header">
+                        <strong id="menuUserName">{{ user }}</strong>
                         <br>
-                        <span id="menuUserEmail">{{ user.email}}</span>
+                        <span id="menuUserEmail">{{ user.email }}</span>
                     </div>
-                    <div class="menuItem">
-                      <a href="{% url 'password_change' %}" class="menuLink">Change password</a> 
+                    <hr id="menuItem_hr">
+                    <div class="menuItem_h changeItem">
+                        <a href="{% url 'password_change' %}" class="changeButton">
+                            <img src="{% static 'images/change-password.png' %}" alt="Change password" class="menuIcon">
+                            <span>Change password</span>
+                        </a>
                     </div>
                     <form action="{% url 'logout' %}" method="post">
-                      {% csrf_token %}
-                      <div class="menuItem logoutItem">
-                        <button type="submit" class="logoutButton">Logout</button>
-                      </div>
-                      
+                        {% csrf_token %}
+                        <div class="menuItem_h logoutItem">
+                            <button type="submit" class="logoutButton">
+                                <img src="{% static 'images/logout.png' %}" alt="Logout" class="menuIcon">
+                                <span>Logout</span>
+                            </button>
+                        </div>
                     </form>
-      
                 </div>
             </div>
         </div>
@@ -50,22 +55,24 @@
     <aside class="aside">
         <nav>
             <ul class="menu">
-                <li class="menuItem activeLink">
-                    <i class="fas fa-tachometer-alt menuIcon"></i>
-                    <span><a href="{% url 'dashboard' %}" class="sidebar_a">Dashboard</a></span>
-                </li>
-                <li class="menuItem">
-                    <i class="fas fa-briefcase menuIcon"></i>
-                    <span><a href="{% url 'jobs:jobs_list' %}" class="sidebar_a">Jobs</a></span>
-                </li>
-                <li class="menuItem">
-                    <i class="fas fa-users menuIcon"></i>
-                    <span>Candidates</span>
-                </li>
-                <li class="menuItem">
-                    <i class="fas fa-chart-bar menuIcon"></i>
-                    <span>Reports</span>
-                </li>
+                <a href="{% url 'dashboard' %}" class="sidebar_a">
+                    <li class="menuItemlink {% if active_page == 'dashboard' %}activeLink{% endif %}" >
+                        <img src="{% static 'images/dashboard.png' %}" class="menuIcon" alt="Dashboard Icon">
+                        <span>Dashboard</span>
+                    </li>
+                </a>
+                <a href="{% url 'jobs:jobs_list' %}" class="sidebar_a">
+                    <li class="menuItemlink {% if active_page == 'jobs' %}activeLink{% endif %}" >
+                        <img src="{% static 'images/jobs.png' %}" class="menuIcon" alt="Jobs Icon">
+                        <span>Jobs</span>
+                    </li>
+                </a>
+                <a href="#" class="sidebar_a">
+                    <li class="menuItemlink {% if active_page == 'reports' %}activeLink{% endif %}">
+                        <img src="{% static 'images/report.png' %}" class="menuIcon" alt="Reports Icon">
+                        <span>Reports</span>
+                    </li>
+                </a>
             </ul>
         </nav>
     </aside>

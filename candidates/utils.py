@@ -9,6 +9,7 @@ from dateutil import relativedelta
 RESUME_SECTIONS_GRAD = [
                     'profile',
                     'contact',
+                    'hello',
                     'about me',
                     'statement',
                     'summary',
@@ -59,13 +60,17 @@ synonym_mapping = {
     "statement": "statement",
     "summary": "statement",
     "about me": "statement",
+    "hello": "contact"
 }
+def convert_to_text(lis):
+    return " ".join(e for e in lis)
+
 def extract_sections(text):
     entities = extract_entity(text)
     normalized = {}
     for key, value in entities.items():
         normalized_key = synonym_mapping.get(key.lower(), key.lower())
-        normalized[normalized_key] = value 
+        normalized[normalized_key] = convert_to_text(value) 
     return normalized
 
 def preprocess_text(text):
@@ -153,8 +158,9 @@ def extract_statement(doc, matcher):
 
 SKILLS_PATH = os.path.join(os.path.dirname(__file__), 'skillset.csv')
 skills_df = pd.read_csv(SKILLS_PATH)
+skills_df = skills_df.apply(lambda x: x.str.lower())
 skills_list = skills_df.stack().tolist()
-
+ 
 def extract_skills(text):
     skills_set = set()
     for i in re.split('[,\s]+',text):
