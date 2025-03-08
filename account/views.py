@@ -12,7 +12,6 @@ from django.core.files import File
 from sentence_transformers import SentenceTransformer
 
 # Load a sentence transformer model
-model = SentenceTransformer('sentence-transformers/all-MiniLM-L6-v2')
 
 @login_required
 def dashboard(request):
@@ -51,6 +50,7 @@ def register(request):
                   {'user_form': user_form})
   
 def extract_embeddings(job):
+    model = SentenceTransformer('sentence-transformers/all-MiniLM-L6-v2')
     if not job:
         return {}
     details = {}
