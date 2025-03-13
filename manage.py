@@ -3,7 +3,7 @@ import os
 import sys
 
 def main():
-    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'mysite.settings.development')  # Update this line
+    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'mysite.settings.production')  # Update this line
     try:
         from django.core.management import execute_from_command_line
     except ImportError as exc:
