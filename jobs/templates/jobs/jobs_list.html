@@ -3,7 +3,7 @@
 {% block title %}Jobs List{% endblock %}
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'css/jobs_list.css' %}">
-
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 {% endblock %}
 {% block content %}
 <div class="container_jobs">
@@ -46,7 +46,7 @@
               <button class="uploadCvBtn"><a href="{% url 'upload_resumes' job_id=job.id %}?next=jobs" style="text-decoration: none; color: white;">Upload CV</a></button>
               <button class="deleteBtn"><a href="{% url 'jobs:delete_job' job.id %}" onclick="return confirm('Are you sure you want to delete this job?');" 
                 style="text-decoration: none;color: white;">Delete Job</a></button>
-              <button class="reportBtn"><a href="{% url 'candidates:job_posts' job_id=job.id %}" style="text-decoration: none; color: white;">Reports</a></button>
+              <button class="reportBtn"><a href="{% url 'candidates:job_posts' job_id=job.id %}" style="text-decoration: none; color: white;">Report</a></button>
           </div>
       </div>
       {% empty %}

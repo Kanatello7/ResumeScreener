@@ -67,6 +67,7 @@ class ResumeParser:
             experience_text = self.sections.get('experience')
             work_experience = utils.extract_work_experience(experience_text)
             exp_year = utils.extract_work_experience_year(experience_text)
+            self.details['experience_year'] = exp_year
             self.details['work_experience'] = f"Professional Experience ({exp_year} years) \n" + work_experience
         
         if self.sections.get('education', False):

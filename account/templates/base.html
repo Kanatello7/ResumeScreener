@@ -67,7 +67,7 @@
                         <span>Jobs</span>
                     </li>
                 </a>
-                <a href="#" class="sidebar_a">
+                <a href="{% url 'reports:jobs_report' %}" class="sidebar_a">
                     <li class="menuItemlink {% if active_page == 'reports' %}activeLink{% endif %}">
                         <img src="{% static 'images/report.png' %}" class="menuIcon" alt="Reports Icon">
                         <span>Reports</span>

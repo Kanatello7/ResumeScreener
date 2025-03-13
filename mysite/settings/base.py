@@ -26,6 +26,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework_simplejwt',
     'corsheaders',
+    'reports.apps.ReportsConfig',
     'candidates.apps.CandidatesConfig',
     'jobs.apps.JobsConfig',
     'account.apps.AccountConfig',

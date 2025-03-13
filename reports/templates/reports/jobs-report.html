@@ -1,0 +1,230 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}All Jobs Report{% endblock %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/jobs-report.css' %}">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+{% endblock %}
+{% block content %}
+<div class="container">
+    <!-- Header -->
+    <div class="header">
+        <h2 class="title">All Jobs Report</h2>
+    </div>
+
+    <!-- Stats cards -->
+    <div class="stats-section">
+        <div class="stat-card">
+            <div class="stat-label">Total Jobs Posted</div>
+            <div class="stat-content">
+                <img src="{% static 'images/total_jobs.png' %}" alt="total_jobs" class="stat-image">
+                <div class="stat-value">{{ total_jobs }}</div>
+            </div>     
+        </div>
+        <div class="stat-card">
+            <div class="stat-label">Total Candidates</div>
+            <div class="stat-content">
+                <img src="{% static 'images/total_candidates.png' %}" alt="total_candidates" class="stat-image">
+                <div class="stat-value">{{ total_candidates }}</div>
+            </div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-label">AVG Match Score</div>
+            <div class="stat-content">
+                <img src="{% static 'images/avg_match.png' %}" alt="avg_match" class="stat-image">
+                <div class="stat-value">{{ total_avg_match}}%</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Filters -->
+    <form method="GET" id="filterForm">
+        <div class="filters">
+            <div class="filter-control">
+                <select name="filter_type" onchange="this.form.submit()">
+                    <option value="all" {% if filter_type == 'all' %}selected{% endif %}>All Jobs</option>
+                    <option value="job_title" {% if filter_type == 'job_title' %}selected{% endif %}>By Job Title</option>
+                    <option value="min_avg_match" {% if filter_type == 'min_avg_match' %}selected{% endif %}>Min Avg Match</option>
+                    <option value="date_posted" {% if filter_type == 'date_posted' %}selected{% endif %}>By Date Posted</option>
+                </select>
+            </div>
+            {% if filter_type == 'min_avg_match' %}
+            <div class="filter-control">
+                <input type="number" name="min_match" min="0" max="100" 
+                       value="{{ request.GET.min_match }}" 
+                       placeholder="Min %" 
+                       onchange="this.form.submit()">
+            </div>
+            {% endif %}
+            {% if filter_type == 'job_title' %}
+            <div class="filter-control">
+                <input type="text" name="title" 
+                       value="{{ request.GET.min_match }}" 
+                       placeholder="Search by Name" 
+                       onchange="this.form.submit()">
+            </div>
+            {% endif %}
+            {% if filter_type == 'date_posted' %}
+            <div class="filter-control">
+                <select name="date_filter" id="date_filter" onchange="this.form.submit()">
+                    <option value="" {% if date_filter == '' %}selected{% endif %}>All</option>
+                    <option value="today" {% if date_filter == 'today' %}selected{% endif %}>Today</option>
+                    <option value="week" {% if date_filter == 'week' %}selected{% endif %}>This Week</option>
+                    <option value="month" {% if date_filter == 'month' %}selected{% endif %}>This Month</option>
+                </select>
+            </div>
+            {% endif %}
+            <div class="filter-control">
+                <select name="sort_by" onchange="this.form.submit()">
+                    <option value="match" {% if sort_by == 'match' %}selected{% endif %}>Sort by Match %</option>
+                    <option value="date" {% if sort_by == 'date' %}selected{% endif %}>Sort by Date</option>
+                    <option value="job_title" {% if sort_by == 'job_title' %}selected{% endif %}>Sort by Job Title</option>
+                </select>
+            </div>
+        </div>
+    </form>
+
+    <!-- Table -->
+    <div class="table-section">
+        <table>
+            <thead>
+                <tr>
+                    <th>Job Title</th>
+                    <th>Total Applicants</th>
+                    <th>Top Candidate</th>
+                    <th>Match Scores</th>
+                    <th>Common Skills</th>
+                    <th>Date Posted</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in rows %}
+                <tr>
+                    <td>{{ row.job_title }}</td>
+                    <td>{{ row.total_applicants }}</td>
+                    <td>{{ row.top_candidate }}</td>
+                    <td>
+                        <span class="top-score">Top: {{ row.top_score }}%</span><br>
+                        <span class="avg-score">Avg: {{ row.avg_score|floatformat:1 }}%</span>
+                    </td>
+                    <td>{{ row.common_skills }}</td>
+                    <td>{{ row.date_str }}</td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td> <h1>Not Found</h1></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Hiring trends -->
+    <div class="hiring-trends">
+        <h3>Visualizations</h3>
+        
+        <!-- Jobs Posted Over Time -->
+        <div class="chart-container">
+            <canvas id="jobsChart"></canvas>
+        </div>
+    
+        <!-- Skills Distribution -->
+        <div class="chart-container">
+            <canvas id="skillsChart"></canvas>
+        </div>
+        <div class="chart-container">
+            <canvas id="candidatesChart"></canvas>
+        </div>
+
+    </div>
+</div>
+{{ chart_data|json_script:"chart-data" }}
+<script>
+    // Get chart data from Django
+    const chartData = JSON.parse(document.getElementById('chart-data').textContent);
+    
+    // Jobs Timeline Chart
+    new Chart(document.getElementById('jobsChart'), {
+        type: 'line',
+        data: {
+            labels: chartData.days,
+            datasets: [{
+                label: 'Jobs Posted',
+                data: chartData.jobs_count,
+                borderColor: '#3e95cd',
+                tension: 0.4,
+                fill: false
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                title: {
+                    display: true,
+                    text: 'Jobs Posted Over Time'
+                }
+            }
+        }
+    });
+    
+    // Skills Distribution Chart
+    new Chart(document.getElementById('skillsChart'), {
+        type: 'bar',
+        data: {
+            labels: chartData.skills_labels,
+            datasets: [{
+                label: 'Skill Frequency',
+                data: chartData.skills_data,
+                backgroundColor: [
+                    '#4dc9f6', '#f67019', '#f53794', 
+                    '#537bc4', '#acc236', '#166a8f',
+                    '#00a950', '#58595b', '#8549ba'
+                ]
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                title: {
+                    display: true,
+                    text: 'Top Skills Across Candidates'
+                }
+            }
+        }
+    });
+    // Candidates by Job Pie Chart
+    new Chart(document.getElementById('candidatesChart'), {
+        type: 'pie',
+        data: {
+            labels: chartData.job_titles,
+            datasets: [{
+                data: chartData.candidates_data,
+                backgroundColor: [
+                    '#4dc9f6', '#f67019', '#f53794', 
+                    '#537bc4', '#acc236', '#166a8f',
+                    '#00a950', '#58595b', '#8549ba',
+                    '#d45087', '#f95d6a', '#ff7c43'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                title: {
+                    display: true,
+                    text: 'Candidates Distribution by Job',
+                    padding: 15
+                },
+                legend: {
+                    position: 'right',
+                    labels: {
+                        boxWidth: 12,
+                        padding: 20
+                    }
+                }
+            }
+        }
+    });
+    </script>
+{% endblock %}

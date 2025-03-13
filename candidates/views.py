@@ -78,7 +78,7 @@ def candidate_profile(request, candidate_id):
     existed_sections = {'personal information': ""}
     personal_info = ""
     for key, value in candidate.details.items():
-        if value != None and value != 'Unknown' and key not in ['raw_text', 'sections', 'full_name', 'email', 'phone_number', 'location'] :
+        if value != None and value != 'Unknown' and key not in ['raw_text', 'sections', 'full_name', 'email', 'phone_number', 'location','experience_year'] :
             value = value.replace("\n", "<br>")
             existed_sections[key] = value
         
