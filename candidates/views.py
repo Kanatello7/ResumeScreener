@@ -5,7 +5,7 @@ from .models import Candidate
 from django.shortcuts import redirect
 from urllib.parse import quote
 from .resumeparser import ResumeParser
-
+import json
 
 def parse_resume(resume_id, file_path):
     parser = ResumeParser(file_path)
@@ -32,7 +32,7 @@ def job_posts(request, job_id):
                 name=data.get('full_name'),
                 email=data.get('email','Unknown'),
                 sections=data.get('sections'),
-                details=data,
+                details=data.get('details'),
                 parsed_text=data.get('raw_text'),
             )
     candidates = job.candidates.all()
@@ -63,7 +63,44 @@ def view_resume(request, candidate_id):
     google_docs_url = f"https://docs.google.com/viewer?url={quote(resume_url)}"
     return redirect(google_docs_url)
 
-import json
+def handle_value(value, new_entity):
+    if type(value) == list:
+        if new_entity:
+            return "<br><br>".join(handle_value(v, True) for v in value)
+        else:
+            return "<br>"+ "<br>".join("● "+ handle_value(v, False) for v in value)
+    elif type(value) == dict:
+        res = ""
+        for k, v in value.items():
+            v = handle_value(v, new_entity=False)
+            if v == 'Not found' or v == "<br>":
+                continue
+            res += f"<strong>{k.replace('_', ' ').capitalize()}</strong>: {v}<br>"
+        return res
+    else:
+        return value
+    
+def prettify_details(details):
+    res = {"Personal Information": ""}
+    personal_info = ""
+    for key, value in details.items():
+
+        if key in ['full_name','job title', 'email','phone','location']:
+            personal_info += f"<strong>{key.capitalize().replace('_', ' ')}</strong>: {value}" + "<br>"
+        elif key in ['skills', 'languages']:
+            if value == 'Not found':
+                continue
+            res[key] = ", ".join(value)
+            
+        else:
+            v = handle_value(value, new_entity=True)
+            if v == 'Not found':
+                continue
+            res[key] = v
+
+    res['Personal Information'] = personal_info
+    return res 
+
 @login_required
 def candidate_profile(request, candidate_id):
     candidate = get_object_or_404(Candidate, id=candidate_id)
@@ -75,21 +112,13 @@ def candidate_profile(request, candidate_id):
     else:
         ext = 'pdf'
     job = candidate.job
-    existed_sections = {'personal information': ""}
-    personal_info = ""
-    for key, value in candidate.details.items():
-        if value != None and value != 'Unknown' and key not in ['raw_text', 'sections', 'full_name', 'email', 'phone_number', 'location','experience_year'] :
-            value = value.replace("\n", "<br>")
-            existed_sections[key] = value
-        
-        if key == 'full_name' or key == 'email' or key == 'phone_number' or key == 'location':
-            personal_info += f"{key.capitalize().replace('_', ' ')}: {value}" + "<br>"
-    existed_sections['personal information'] = personal_info
+    
+    details = prettify_details(candidate.details)
     
     return render(request, 'candidates/profile.html', {'candidate':candidate,
                                                        'job':job,
                                                        'ext':ext,
-                                                       'existed_sections': existed_sections})
+                                                       'existed_sections': details})
 
 @login_required
 def delete_resume(request, resume_id):

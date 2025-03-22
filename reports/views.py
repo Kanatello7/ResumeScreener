@@ -23,7 +23,7 @@ def get_charts(request, jobs):
     for job in jobs:
         for candidate in job.candidates.all():
             if candidate.details.get('skills'):
-                for skill in candidate.details['skills'].split(', '):
+                for skill in candidate.details['skills']:
                     skills_distribution[skill.strip()] += 1
 
     candidate_distribution = {
@@ -79,7 +79,7 @@ def jobs_report(request):
                 top_candidate = candidate
                 avg_match += candidate.match_percentage
             if candidate.details.get('skills') is not None:
-                for skill in candidate.details['skills'].split(', '):
+                for skill in candidate.details['skills']:
                     skills_freq[skill] = skills_freq.get(skill, 0) + 1 
         common_skills = ", ".join([key for key, _ in sorted(skills_freq.items(), key=lambda item: item[1], reverse=True)[:3]])
         total_avg_match += avg_match
