@@ -30,6 +30,23 @@ def get_charts(request, jobs):
         job.job_title: job.candidates.count()
         for job in jobs
     }
+    
+    score_comparison = {
+        'job_titles': [],
+        'top_scores': [],
+        'avg_scores': []
+    }
+    
+    for job in jobs:
+        candidates = job.candidates.all()
+        if candidates:
+            top_score = max(c.match_percentage for c in candidates)
+            avg_score = sum(c.match_percentage for c in candidates) / len(candidates)
+            
+            score_comparison['job_titles'].append(job.job_title[:20] + ('...' if len(job.job_title) > 20 else ''))
+            score_comparison['top_scores'].append(top_score)
+            score_comparison['avg_scores'].append(avg_score)
+    
 
     chart_data = {
         'days': [entry['day'].strftime('%d %b') for entry in dayly_jobs],
@@ -38,6 +55,7 @@ def get_charts(request, jobs):
         'skills_data': list(skills_distribution.values())[:10],
         'job_titles': list(candidate_distribution.keys()),
         'candidates_data': list(candidate_distribution.values()),
+        'score_comparison': score_comparison
     }
     return chart_data
     
@@ -77,7 +95,7 @@ def jobs_report(request):
             if candidate.match_percentage > top_candidate_match: 
                 top_candidate_match = candidate.match_percentage
                 top_candidate = candidate
-                avg_match += candidate.match_percentage
+            avg_match += candidate.match_percentage
             if candidate.details.get('skills') is not None:
                 for skill in candidate.details['skills']:
                     skills_freq[skill] = skills_freq.get(skill, 0) + 1 

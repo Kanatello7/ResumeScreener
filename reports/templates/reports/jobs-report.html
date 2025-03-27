@@ -32,7 +32,7 @@
             <div class="stat-label">AVG Match Score</div>
             <div class="stat-content">
                 <img src="{% static 'images/avg_match.png' %}" alt="avg_match" class="stat-image">
-                <div class="stat-value">{{ total_avg_match}}%</div>
+                <div class="stat-value">{{ total_avg_match|floatformat:2}}%</div>
             </div>
         </div>
     </div>
@@ -104,8 +104,8 @@
                     <td>{{ row.total_applicants }}</td>
                     <td>{{ row.top_candidate }}</td>
                     <td>
-                        <span class="top-score">Top: {{ row.top_score }}%</span><br>
-                        <span class="avg-score">Avg: {{ row.avg_score|floatformat:1 }}%</span>
+                        <span class="top-score">Top: {{ row.top_score|floatformat:2 }}%</span><br>
+                        <span class="avg-score">Avg: {{ row.avg_score|floatformat:2 }}%</span>
                     </td>
                     <td>{{ row.common_skills }}</td>
                     <td>{{ row.date_str }}</td>
@@ -118,24 +118,27 @@
             </tbody>
         </table>
     </div>
-
+    
     <!-- Hiring trends -->
     <div class="hiring-trends">
         <h3>Visualizations</h3>
+
         
-        <!-- Jobs Posted Over Time -->
+        <!-- First row -->
         <div class="chart-container">
             <canvas id="jobsChart"></canvas>
         </div>
-    
-        <!-- Skills Distribution -->
         <div class="chart-container">
             <canvas id="skillsChart"></canvas>
         </div>
+        
+        <!-- Second row -->
         <div class="chart-container">
             <canvas id="candidatesChart"></canvas>
         </div>
-
+        <div class="chart-container">
+            <canvas id="scoreComparisonChart"></canvas>
+        </div>
     </div>
 </div>
 {{ chart_data|json_script:"chart-data" }}
@@ -226,5 +229,64 @@
             }
         }
     });
-    </script>
+    // Score Comparison Chart
+const scoreCtx = document.getElementById('scoreComparisonChart').getContext('2d');
+new Chart(scoreCtx, {
+    type: 'bar',
+    data: {
+        labels: chartData.score_comparison.job_titles,
+        datasets: [
+            {
+                label: 'Top Score',
+                data: chartData.score_comparison.top_scores,
+                backgroundColor: '#4dc9f6',
+                borderColor: '#3e95cd',
+                borderWidth: 1
+            },
+            {
+                label: 'Average Score',
+                data: chartData.score_comparison.avg_scores,
+                backgroundColor: '#f67019',
+                borderColor: '#e35f10',
+                borderWidth: 1
+            }
+        ]
+    },
+    options: {
+        responsive: true,
+        scales: {
+            y: {
+                beginAtZero: true,
+                max: 100,
+                title: {
+                    display: true,
+                    text: 'Match Score (%)'
+                }
+            },
+            x: {
+                title: {
+                    display: true,
+                    text: 'Job Titles'
+                }
+            }
+        },
+        plugins: {
+            title: {
+                display: true,
+                text: 'Top vs Average Scores by Job',
+                font: {
+                    size: 16
+                }
+            },
+            tooltip: {
+                callbacks: {
+                    label: function(context) {
+                        return `${context.dataset.label}: ${context.raw}%`;
+                    }
+                }
+            }
+        }
+    }
+});
+</script>
 {% endblock %}

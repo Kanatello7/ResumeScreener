@@ -9,9 +9,6 @@ import tempfile
 import patoolib
 from django.core.exceptions import ValidationError
 from django.core.files import File  
-from sentence_transformers import SentenceTransformer
-
-# Load a sentence transformer model
 
 @login_required
 def dashboard(request):
@@ -49,15 +46,6 @@ def register(request):
                   'account/register.html',
                   {'user_form': user_form})
   
-def extract_embeddings(job):
-    model = SentenceTransformer('sentence-transformers/all-MiniLM-L6-v2')
-    if not job:
-        return {}
-    details = {}
-    fields = ['job_title','location','experience_level','employment_type','requirements', 'skills', 'responsibilities', 'job_description']
-    details = {field: model.encode(getattr(job, field, "") or "").tolist() for field in fields}
-
-    return details
  
 @login_required
 def post_job(request):
@@ -67,7 +55,6 @@ def post_job(request):
         if form.is_valid():
             job = form.save(commit=False)
             job.employer = request.user
-            job.embedded_details = extract_embeddings(job)
             job.save()
             return redirect('upload_resumes', job_id=job.id)
     else:

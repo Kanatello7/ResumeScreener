@@ -63,7 +63,7 @@
             <div class="candidateInfo">
                 <a href="candidate-detail.html" class="candidateLink">
                     <h4 class="candidateName"><a href="{% url 'candidates:candidate_profile' candidate_id=candidate.id %}" style="text-decoration: none; color: black;">{{candidate.name}}</a></h4>
-                    <p class="candidateRole">{{ candidate.email }} | 92% match</p>
+                    <p class="candidateRole">{{ candidate.email }} | {{ candidate.match_percentage|floatformat:2  }} </p>
                 </a>
             </div>
             <a href="{% url 'candidates:delete_resume' candidate.resume.id %}"
