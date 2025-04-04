@@ -239,6 +239,86 @@ def prettify_details(details):
     res['Personal Information'] = personal_info
     return res 
 
+def generate_final_report(candidate):
+    job = candidate.job
+    fields = ['job_title','location','experience_level','employment_type','requirements', 'skills', 'responsibilities', 'job_description']
+    job_data = {field: getattr(job, field, "") for field in fields}
+    candidate_data = candidate.details
+    score_explanation = candidate.ai_comment
+    
+    system_prompt = """\
+    You are a specialized HR assistant. You excel at reading job descriptions and candidate details,
+    then providing a concise and organized final report for the hiring manager, including
+    key strengths, development areas or gaps, and recommended interview questions.
+    Return your result in valid JSON, with the following keys:
+    - "strengths": [list of candidate strengths relevant to the job],
+    - "development_areas": [list of candidate weaknesses or gaps relative to the job],
+    - "recommended_questions": [list of recommended interview questions to ask this candidate],
+    - "summary": a short concise overall assessment.
+    """
+
+    user_prompt = f"""
+    JOB POST:
+    {json.dumps(job_data, indent=2)}
+
+    CANDIDATE:
+    {json.dumps(candidate_data, indent=2)}
+
+    Please analyze the candidate in relation to the job description. Summarize the candidate’s key strengths, 
+    potential development areas, and propose 3-5 focused interview questions to address these areas.
+
+    Return only valid JSON, in this format:
+    {{
+    "strengths": [...],
+    "development_areas": [...],
+    "recommended_questions": [...],
+    "summary": ""
+    }}
+    """
+
+    response = client.chat.completions.create(
+        model="gpt-4o",
+        messages=[
+            {"role": "system", "content": system_prompt},
+            {"role": "user", "content": user_prompt}
+        ],
+        temperature=0.3
+    )
+
+    content = response.choices[0].message.content.strip("```json").strip("```").strip()
+
+    try:
+        final_report = json.loads(content)
+    except json.JSONDecodeError:
+        final_report = {
+            "strengths": [],
+            "development_areas": [],
+            "recommended_questions": [],
+            "summary": "Error parsing JSON"
+        }
+    final_report['score explanation'] = score_explanation
+    return final_report
+
+def convert_final_report_to_text(final_report, interview):
+    if interview:
+        final_report_text = f"<strong>Recommended Questions:</strong><br>"
+        for i, val in enumerate(final_report['recommended_questions']):
+            final_report_text += f"{i+1}) {val}<br>"
+        return final_report_text
+    
+    final_report_text = ""
+    for key, value in final_report.items():
+        if key == 'recommended_questions' and not interview:
+            continue
+        final_report_text += f"<strong>{key.replace('_', ' ').capitalize()}</strong>" + ":<br>"
+        if key == 'summary' or key == 'score explanation':
+            final_report_text += value + "<br><br>"
+            continue
+        for i, val in enumerate(value):
+            final_report_text += f"{i+1}) {val}<br>"
+        final_report_text += "<br><br>"
+    return final_report_text
+
 @login_required
 def candidate_profile(request, candidate_id):
     candidate = get_object_or_404(Candidate, id=candidate_id)
@@ -252,6 +332,13 @@ def candidate_profile(request, candidate_id):
     job = candidate.job
     
     details = prettify_details(candidate.details)
+    
+    if candidate.interview_questions == None:
+        final_report = generate_final_report(candidate)
+        candidate.ai_comment = convert_final_report_to_text(final_report, interview=False)
+        candidate.interview_questions = convert_final_report_to_text(final_report, interview=True)
+        candidate.save()
+
     
     return render(request, 'candidates/profile.html', {'candidate':candidate,
                                                        'job':job,

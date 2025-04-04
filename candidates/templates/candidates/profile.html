@@ -51,9 +51,9 @@
 
     <!-- AI Generated Comment -->
     <div class="infoSection">
-        <h3>AI Generated Comment</h3>
+        <h3>Final Report</h3>
         <div class="largeBox">
-            <p>{{candidate.ai_comment}}</p>
+            <p>{{candidate.ai_comment | safe}}</p>
         </div>
     </div>
 
@@ -61,7 +61,7 @@
     <div class="infoSection">
         <h3>Generated Interview Questions</h3>
         <div class="largeBox">
-            <p>{{candidate.interview_questions}}</p>
+            <p>{{candidate.interview_questions| safe}}</p>
         </div>
     </div>
 
