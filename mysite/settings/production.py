@@ -4,7 +4,7 @@ import os
 import dj_database_url
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 # Allow all hosts (or specify your domain)
 ALLOWED_HOSTS = ['*']
@@ -15,7 +15,6 @@ DATABASES = {
 }
 
 # Static files configuration for production
-STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
