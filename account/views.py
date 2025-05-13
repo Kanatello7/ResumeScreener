@@ -16,7 +16,8 @@ def dashboard(request):
     jobs = []
     for job in recent_jobs:
         jobs.append((job,len(job.resumes.all())))
-    all_jobs = Job.objects.all()
+    
+    all_jobs = Job.objects.filter(employer=request.user)
     active_jobs = len(list(all_jobs))
     total_candidates = 0
     for job in all_jobs:
