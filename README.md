@@ -40,11 +40,7 @@ Whether you're a recruiter, HR professional, or developer building custom hiring
    ```
    pip install -r requirements.txt
    ```
-
-## 🙏 Acknowledgments
-
-- Built with love by [Kanatello7](https://github.com/Kanatello7).
-- Thanks to the open-source community for libraries like NLTK and scikit-learn.
----
-
-*If the repo gets populated with actual code, feel free to share updates—I can refine this README accordingly! 🚀*
+4. **Run Web App**:
+   ```
+   python manage.py runserver
+   ```
